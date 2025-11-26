@@ -51,6 +51,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+
+
 # Translations
 *.mo
 *.pot
@@ -205,3 +207,5 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+coco_data/
