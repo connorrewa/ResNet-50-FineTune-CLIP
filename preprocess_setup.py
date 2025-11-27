@@ -47,7 +47,10 @@ def subset_data(data, percentage):
 
     # Select random subset of Image IDs
     all_img_ids = list(img_to_caps.keys())
+    
+    # [CHANGE 1] Shuffle is now deterministic due to random.seed in main()
     random.shuffle(all_img_ids)
+    
     num_to_keep = int(len(all_img_ids) * percentage)
     subset_img_ids = all_img_ids[:num_to_keep]
     
@@ -96,10 +99,12 @@ def encode_and_save(pairs, split_name, tokenizer, text_encoder):
                     return_tensors="pt"
                 ).to(DEVICE)
                 
-                # Encode
-                text_embeddings = text_encoder(**inputs).last_hidden_state[:, 0, :] # CLS token pooling
-                # Alternative: text_embeddings = text_encoder.get_text_features(**inputs) if using CLIPModel
-                # Since we loaded CLIPTextModel, we take the pooled output manually or use pooler_output
+                # [CHANGE 2] Encode using pooler_output (EOS token) instead of index 0 (CLS)
+                # CLIP uses the EOS token to represent the sentence.
+                # pooler_output in HuggingFace CLIPTextModel extracts the EOS feature automatically.
+                outputs = text_encoder(**inputs)
+                text_embeddings = outputs.pooler_output
+                
                 text_embeddings = text_embeddings.cpu()
                 
                 # Save to list
@@ -121,6 +126,11 @@ def encode_and_save(pairs, split_name, tokenizer, text_encoder):
     torch.save(processed_dataset, save_path)
 
 def main():
+    # [CHANGE 3] Set Seed for Reproducibility
+    random.seed(42)
+    np.random.seed(42)
+    torch.manual_seed(42)
+    
     setup_directories()
     
     # Load CLIP components
