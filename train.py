@@ -17,7 +17,7 @@ CONFIG = {
     "val_pt_path": "./processed_data/val_data.pt",      # From preprocess_setup.py
     "img_root_train": "./coco_data/train2014",          # Adjust if needed
     "img_root_val": "./coco_data/val2014",              # Adjust if needed
-    "batch_size": 32,
+    "batch_size": 64,
     "learning_rate": 1e-4,  # Lower LR for fine-tuning
     "epochs": 5,
     "temperature": 0.07,    # Standard CLIP temperature
