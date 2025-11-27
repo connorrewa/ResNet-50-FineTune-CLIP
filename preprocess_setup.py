@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 # Configuration
 DATA_ROOT = "./coco_data"
 OUTPUT_DIR = "./processed_data"
-SUBSET_PERCENTAGE = 0.30
+SUBSET_PERCENTAGE = 0.50
 BATCH_SIZE = 32
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

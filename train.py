@@ -29,31 +29,22 @@ CONFIG = {
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):
     """
     Calculates the InfoNCE (Contrastive) Loss.
-    
     Args:
         image_embeddings: Tensor of shape (batch_size, embed_dim)
         text_embeddings: Tensor of shape (batch_size, embed_dim)
         temperature: Scalar to scale logits
     """
     # 1. Calculate Cosine Similarity Matrix
-    # Both embeddings are already normalized in the model/dataset, 
-    # so dot product equals cosine similarity.
-    # Shape: (batch_size, batch_size)
     logits = (image_embeddings @ text_embeddings.T) / temperature
 
     # 2. Create Labels
-    # The image at index i corresponds to the text at index i.
-    # So the targets are the diagonal elements (0, 1, 2, ... batch_size-1)
     batch_size = image_embeddings.shape[0]
     targets = torch.arange(batch_size).to(device)
 
     # 3. Calculate Symmetric Loss
-    # Loss for Image-to-Text (rows)
     loss_i2t = nn.functional.cross_entropy(logits, targets)
-    # Loss for Text-to-Image (columns)
     loss_t2i = nn.functional.cross_entropy(logits.T, targets)
 
-    # Average the two losses
     return (loss_i2t + loss_t2i) / 2
 
 def train_one_epoch(model, dataloader, optimizer, device, epoch_idx):
@@ -66,12 +57,12 @@ def train_one_epoch(model, dataloader, optimizer, device, epoch_idx):
     for batch in pbar:
         # Move data to device
         images = batch['image'].to(device)
-        text_embeddings = batch['text_embedding'].to(device) # Frozen embeddings [cite: 35]
+        text_embeddings = batch['text_embedding'].to(device) # Frozen embeddings
         
         # Zero gradients
         optimizer.zero_grad()
         
-        # Forward pass (Image Encoder only) [cite: 36]
+        # Forward pass (Image Encoder only)
         img_embeddings = model(images)
         
         # Calculate Loss
@@ -107,7 +98,7 @@ def validate(model, dataloader, device, epoch_idx):
     return running_loss / len(dataloader)
 
 def plot_training_curves(train_losses, val_losses, save_path):
-    """Generates and saves the loss plot as required[cite: 78, 99]."""
+    """Generates and saves the loss plot."""
     plt.figure(figsize=(10, 5))
     plt.plot(train_losses, label="Training Loss")
     plt.plot(val_losses, label="Validation Loss")
@@ -123,7 +114,7 @@ def main():
     # Setup directories
     os.makedirs(os.path.dirname(CONFIG['save_path']), exist_ok=True)
     
-    print(f"Using device: {CONFIG['device']}") # [cite: 79]
+    print(f"Using device: {CONFIG['device']}")
     print("Initializing Datasets...")
     
     # Load Datasets
@@ -135,7 +126,7 @@ def main():
     
     # Initialize Model
     print("Initializing Model...")
-    model = ImageEncoder().to(CONFIG['device']) # ResNet50 backbone [cite: 67]
+    model = ImageEncoder().to(CONFIG['device'])
     
     # Optimizer
     optimizer = optim.Adam(model.parameters(), lr=CONFIG['learning_rate'])
@@ -143,6 +134,9 @@ def main():
     # Track metrics
     train_losses = []
     val_losses = []
+    
+    # Track best performance
+    best_val_loss = float('inf')
     
     start_time = time.time()
     
@@ -156,15 +150,20 @@ def main():
         
         print(f"Epoch {epoch+1}/{CONFIG['epochs']} - Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
         
-        # Save checkpoint every epoch (optional, but good practice)
-        torch.save(model.state_dict(), CONFIG['save_path'])
+        # Save checkpoint ONLY if validation loss improves
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), CONFIG['save_path'])
+            print(f"  -> New best model saved! (Val Loss: {best_val_loss:.4f})")
+        else:
+            print(f"  -> Val Loss did not improve (Best: {best_val_loss:.4f})")
 
     total_time = time.time() - start_time
-    print(f"\nTraining Complete. Total time: {total_time/60:.2f} minutes.") # [cite: 79, 98]
+    print(f"\nTraining Complete. Total time: {total_time/60:.2f} minutes.")
     
     # Generate Report Artifacts
     plot_training_curves(train_losses, val_losses, CONFIG['plot_path'])
-    print(f"Model saved to {CONFIG['save_path']}")
+    print(f"Best model saved to {CONFIG['save_path']}")
 
 if __name__ == "__main__":
     main()
