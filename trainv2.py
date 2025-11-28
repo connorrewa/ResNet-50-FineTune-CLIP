@@ -9,8 +9,7 @@ from tqdm import tqdm
 
 # Import IMPROVED modules
 from modelv2 import ImageEncoderImproved
-from coco_datasetv2 import CocoClipDatasetImproved
-
+from coco_dataset import CocoClipDataset as CocoClipDatasetImproved
 # --- Configuration ---
 CONFIG = {
     "train_pt_path": "./processed_data/train_data.pt",
@@ -22,8 +21,8 @@ CONFIG = {
     "epochs": 10,           # Increased epochs to let scheduler work
     "temperature": 0.07,
     "device": "cuda" if torch.cuda.is_available() else "cpu",
-    "save_path": "./saved_models/clip_resnet_improved.pth", # New filename
-    "plot_path": "./training_loss_curve_improved.png"
+    "save_path": "./saved_models/clip_resnet_improved_v2.pth", # New filename
+    "plot_path": "./training_loss_curve_improved_v2.png"
 }
 
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):
@@ -74,8 +73,8 @@ def main():
     
     print("Initializing IMPROVED Datasets...")
     # Note 'split' parameter
-    train_dataset = CocoClipDatasetImproved(CONFIG['train_pt_path'], CONFIG['img_root_train'], split="train")
-    val_dataset = CocoClipDatasetImproved(CONFIG['val_pt_path'], CONFIG['img_root_val'], split="val")
+    train_dataset = CocoClipDatasetImproved(CONFIG['train_pt_path'], CONFIG['img_root_train'])
+    val_dataset = CocoClipDatasetImproved(CONFIG['val_pt_path'], CONFIG['img_root_val'])
     
     train_loader = DataLoader(train_dataset, batch_size=CONFIG['batch_size'], shuffle=True, num_workers=2)
     val_loader = DataLoader(val_dataset, batch_size=CONFIG['batch_size'], shuffle=False, num_workers=2)

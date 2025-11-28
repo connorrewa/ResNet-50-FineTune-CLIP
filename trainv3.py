@@ -9,7 +9,8 @@ from tqdm import tqdm
 
 # Import IMPROVED modules
 from modelv2 import ImageEncoderImproved
-from coco_dataset import CocoClipDataset as CocoClipDatasetImproved
+from coco_dataset_augmentation import CocoClipDatasetImproved
+
 # --- Configuration ---
 CONFIG = {
     "train_pt_path": "./processed_data/train_data.pt",
@@ -21,8 +22,8 @@ CONFIG = {
     "epochs": 10,           # Increased epochs to let scheduler work
     "temperature": 0.07,
     "device": "cuda" if torch.cuda.is_available() else "cpu",
-    "save_path": "./saved_models/clip_resnet_improved_noaug.pth", # New filename
-    "plot_path": "./training_loss_curve_improved_noaug.png"
+    "save_path": "./saved_models/clip_resnet_v3.pth", # New filename
+    "plot_path": "./training_loss_curve_v3.png"
 }
 
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):
