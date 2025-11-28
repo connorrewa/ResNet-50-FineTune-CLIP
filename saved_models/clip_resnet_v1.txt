@@ -1,0 +1,28 @@
+(.venv) PS C:\Users\20car8\Desktop\ResNet-50-FineTune-CLIP> python .\visualize_evaluate.py
+Loading Validation Dataset...
+Loading dataset from ./processed_data/val_data.pt...
+Extracting Image IDs for evaluation...
+Loading Model...
+Pretrained weights loaded.
+Generating global embeddings for evaluation...
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1584/1584 [09:23<00:00,  2.81it/s] 
+
+Computing Recall metrics for 101323 samples...
+--- Computing Image-to-Text Recall ---
+I2T Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 396/396 [00:04<00:00, 87.94it/s] 
+I2T Recall@1: 0.0847
+I2T Recall@5: 0.2271
+I2T Recall@10: 0.3212
+
+--- Computing Text-to-Image Recall ---
+Refined Search Space: 20252 unique images.
+T2I Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 396/396 [00:00<00:00, 506.22it/s] 
+T2I Recall@1: 0.0837
+T2I Recall@5: 0.2261
+T2I Recall@10: 0.3213
+
+--- Visualizing Retrieval for query: 'a group of people playing baseball' ---
+
+--- Visualizing Retrieval for query: 'a plate of food' ---
+
+--- Visualizing Zero-Shot Classification ---

@@ -19,11 +19,11 @@ CONFIG = {
     "img_root_val": "./coco_data/val2014",              # Adjust if needed
     "batch_size": 64,
     "learning_rate": 1e-4,  # Lower LR for fine-tuning
-    "epochs": 5,
+    "epochs": 10,
     "temperature": 0.07,    # Standard CLIP temperature
     "device": "cuda" if torch.cuda.is_available() else "cpu",
-    "save_path": "./saved_models/clip_resnet_finetuned.pth",
-    "plot_path": "./training_loss_curve.png"
+    "save_path": "./saved_models/clip_resnet_finetuned_10epochs.pth",
+    "plot_path": "./training_loss_curve_10epochs.png"
 }
 
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):
