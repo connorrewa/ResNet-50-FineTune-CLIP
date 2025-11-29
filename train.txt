@@ -1,0 +1,6 @@
+# Training command (run in repository root)
+# Ensure dependencies installed first from README.md
+
+python train.py
+python trainv2.py
+python trainv3.py

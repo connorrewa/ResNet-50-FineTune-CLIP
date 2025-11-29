@@ -1,0 +1,17 @@
+# Testing commands (run in repository root)
+# Ensure dependencies installed first from README.md
+
+# Evaluation Commands:
+python evaluatev1.py
+python evaluatev2.py
+python evaluatev3.py
+
+# Text to Image Visualization Commands:
+python visualize_captionv1.py
+python visualize_captionv2.py
+python visualize_captionv3.py
+
+# Zeroshot Visualization Commands:
+python visualize_zeroshotv1.py
+python visualize_zeroshotv2.py
+python visualize_zeroshotv3.py
