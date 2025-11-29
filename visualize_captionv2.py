@@ -119,7 +119,7 @@ def main():
     
     # 2. Load Model
     print(f"Loading Model from {CONFIG['model_path']}...")
-    model = ImageEncoder().to(CONFIG['device'])
+    model = ImageEncoderImproved().to(CONFIG['device'])
     
     if os.path.exists(CONFIG['model_path']):
         # strict=False allows loading slightly mismatched weights (e.g. if you added dropout/bn later)
