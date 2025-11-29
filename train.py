@@ -22,8 +22,8 @@ CONFIG = {
     "epochs": 10,
     "temperature": 0.07,    # Standard CLIP temperature
     "device": "cuda" if torch.cuda.is_available() else "cpu",
-    "save_path": "./saved_models/clip_resnet_finetuned_10epochs.pth",
-    "plot_path": "./training_loss_curve_10epochs.png"
+    "save_path": "./saved_models/clip_resnet_v1.pth",
+    "plot_path": "./training_loss_curve_v1.png"
 }
 
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):

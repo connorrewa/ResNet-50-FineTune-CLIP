@@ -21,8 +21,8 @@ CONFIG = {
     "epochs": 10,           # Increased epochs to let scheduler work
     "temperature": 0.07,
     "device": "cuda" if torch.cuda.is_available() else "cpu",
-    "save_path": "./saved_models/clip_resnet_improved_v2.pth", # New filename
-    "plot_path": "./training_loss_curve_improved_v2.png"
+    "save_path": "./saved_models/clip_resnet_v2.pth", # New filename
+    "plot_path": "./training_loss_curve_v2.png"
 }
 
 def info_nce_loss(image_embeddings, text_embeddings, temperature, device):
