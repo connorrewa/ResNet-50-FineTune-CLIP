@@ -11,7 +11,7 @@ from PIL import Image
 # Import custom modules
 # Ensure these files (model.py, coco_dataset.py) are in the same folder
 from modelv2 import ImageEncoderImproved as ImageEncoder
-from coco_dataset_augmentation import CocoClipDatasetImproved as CocoClipDataset
+from coco_dataset import CocoClipDataset
 
 # --- Configuration ---
 CONFIG = {

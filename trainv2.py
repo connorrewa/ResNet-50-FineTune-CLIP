@@ -76,8 +76,8 @@ def main():
     train_dataset = CocoClipDatasetImproved(CONFIG['train_pt_path'], CONFIG['img_root_train'])
     val_dataset = CocoClipDatasetImproved(CONFIG['val_pt_path'], CONFIG['img_root_val'])
     
-    train_loader = DataLoader(train_dataset, batch_size=CONFIG['batch_size'], shuffle=True, num_workers=2)
-    val_loader = DataLoader(val_dataset, batch_size=CONFIG['batch_size'], shuffle=False, num_workers=2)
+    train_loader = DataLoader(train_dataset, batch_size=CONFIG['batch_size'], shuffle=True, num_workers=0)
+    val_loader = DataLoader(val_dataset, batch_size=CONFIG['batch_size'], shuffle=False, num_workers=0)
     
     print("Initializing IMPROVED Model...")
     model = ImageEncoderImproved().to(CONFIG['device'])

@@ -26,3 +26,6 @@ T2I Recall@10: 0.3213
 --- Visualizing Retrieval for query: 'a plate of food' ---
 
 --- Visualizing Zero-Shot Classification ---
+
+
+training time: 422.13 mins

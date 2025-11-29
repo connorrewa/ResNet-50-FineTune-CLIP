@@ -212,6 +212,6 @@ coco_data/
 processed_data/
 coco_data.zip
 
-# *.pth
-# .pt
-# *.png
+*.pth
+.pt
+*.png

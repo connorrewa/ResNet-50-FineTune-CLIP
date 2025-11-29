@@ -17,7 +17,7 @@ from coco_dataset import CocoClipDataset
 CONFIG = {
     "val_pt_path": "./processed_data/val_data.pt",      
     "img_root_val": "./coco_data/val2014",              
-    "model_path": "./saved_models/clip_resnet_finetuned.pth", 
+    "model_path": "./saved_models/clip_resnet_v1.pth", 
     "batch_size": 64,
     "device": "cuda" if torch.cuda.is_available() else "cpu",
     "clip_model_name": "openai/clip-vit-base-patch32"
